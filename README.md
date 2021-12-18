@@ -54,7 +54,11 @@ But I would already like to thank any future contributor. Whether is for program
 - This project is licensed under GPLv3. See the file [LICENSE](LICENSE) for details.<br>
 For this project a really important of the license is the one that boils down: **"Don't blame me if you end up in problems."**
 - The following requests should only be treated as *requests*. You are free to ignore them, but I would certainly appreciate following them:
-    - If you make changes in your version of this project and you assume others might be interested:<br>Please send a [Merge Request](https://gitlab.com/ngaro/beerpot/-/merge_requests/new). *Even if your assume your changes ar only usable to a small part of the user. In that case I might create an extra branch for them*
-    - If you notice bugs:<br>[File an issue in this repository](https://gitlab.com/ngaro/beerpot/-/issues/new) and start the title with: "BUG: "
-    - If you have a feature request:<br>[File an issue in this repository](https://gitlab.com/ngaro/beerpot/-/issues/new) and start the title with: "FR: "
-    - If you can think of an interesting use case (not yet mentioned in [Usage](#Usage)):<br>[File an issue in this repository](https://gitlab.com/ngaro/beerpot/-/issues/new) and start the title with: "INFO: "
+
+    - If you make changes in your version of this project and you assume others might be interested → Send a [Merge Request](https://gitlab.com/ngaro/beerpot/-/merge_requests/new).<br>*Even if your assume your changes are only usable to a small part of the user. In that case I might create an extra branch for them*
+
+    - If you notice bugs → [File an issue in this repository](https://gitlab.com/ngaro/beerpot/-/issues/new) and start the title with: **"BUG: "**
+
+    - If you have a feature request → [File an issue in this repository](https://gitlab.com/ngaro/beerpot/-/issues/new) and start the title with: **"FEATREQ: "**
+
+    - If you can think of an interesting use case (not yet mentioned in [Usage](#Usage)) → [File an issue in this repository](https://gitlab.com/ngaro/beerpot/-/issues/new) and start the title with: **"INFO: "**
