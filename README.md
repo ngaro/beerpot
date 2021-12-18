@@ -46,7 +46,7 @@ This is how I do it on a Ubuntu 20.04 or Mint 20 (assuming I'm already root):<br
 
 - You can just run `docker build -t beerpot .` *(Don't forget the trailing dot)*
 
-- But you probably want to use `docker build --build-owner OWNER="Your name" -t beerpot .` instead<br>
+- But you probably want to use `docker build --build-owner OWNER="Your name" -t beerpot .` instead.<br>
 By setting this argument your name will appear in Beerpot everywhere it's talking about the owner.<br>
 *(Otherwise it would just mention "Somebody")*
 
