@@ -66,7 +66,7 @@ At this moment it only contains my assumptions. Chances are that some of them ar
 If you have experience in limiting resources on Docker containers, then<br>please add answers in my StackOverflow question and they will also be posted here if they get enough upvotes to be trusted.
 
 ### Running it
-- You can just run `docker run -d --rm -p 22:22 --name beerpot beerpot`.<br>*You can now also see the connections (and attempts) are visible with `docker logs beerpot`*
+- You can just run `docker run -d --rm -p 22:22 --name beerpot beerpot`<br>*You can now also see the connections (and attempts) are visible with `docker logs beerpot`*
 
 - When you are using a firewall, the following is also an interesting setup:<br>*(It makes sure that connections from IP's you trust end up on the ssh-server of the host while the rest of the internet will end up at honeypot)*
 
