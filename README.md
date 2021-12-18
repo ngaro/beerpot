@@ -25,49 +25,58 @@ See also [License and requests](README.md#License and request) for more informat
 
 ## Installation
 
-The only dependency is docker. How to install docker depends of which OS you are using, multiple guides are available online.<br>
-This is how I do it on a Ubuntu 20.04 or Mint 20:<br>*(I use the official version, the procedure to install the one offered by Ubuntu is easier.)*
+### Installing docker
+
+Docker is the only dependency.<br>How to install it depends of which OS you are using, multiple guides are available online.
+
+This is how I do it on a Ubuntu 20.04 or Mint 20 (assuming I'm already root):<br>*(I use the official version, the procedure to install the one offered by Ubuntu is easier.)*
 ```bash
     apt-get -y install apt-transport-https ca-certificates curl software-properties-common && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && apt-key fingerprint 0EBFCD88 && \
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" && \
     apt-get update && apt-get -y install docker-ce && \
-    echo '{ "storage-driver": "overlay2" }' > /etc/docker/daemon.json && apt-get -y install docker-compose docker-ce-cli containerd.io && \
-    echo "Installation OK" || echo "Installation Failed"
-    After this I give my user permission to use docker and restart it
-    usermod -G docker -a myUsername
+    echo '{ "storage-driver": "overlay2" }' > /etc/docker/daemon.json && \
+    apt-get -y install docker-compose docker-ce-cli containerd.io && \
+    echo "Installation OK"
+    #After this I give my user (we assume my user is "myUsername") permission to use docker and I restart it
+    usermod -G docker -a myUsername && systemctl restart docker && echo "Giving myUsername permissions and restarting OK"
 ```
 
-Now that you have docker (or if you already had it) the installation of Beerpot is easy:
+### Installing Beerpot
 
 - You can just run `docker build -t beerpot .` *(Don't forget the trailing dot)*
 
-- But you probaly want to use `docker build --build-owner OWNER="Your name" -t beerpot .` instead<br>
-By supplying like this argument your name will appear in the honeypot everywhere it's talking about the owner.<br>
-*Otherwise it would just mention "Somebody"*
+- But you probably want to use `docker build --build-owner OWNER="Your name" -t beerpot .` instead<br>
+By setting this argument your name will appear in Beerpot everywhere it's talking about the owner.<br>
+*(Otherwise it would just mention "Somebody")*
 
-- And if you want to change the default username (`user`) or password (`pass`) you can add `--build-arg USER=newusername --build-arg='new password'`
+- And if you want to change the default username (`user`) and/or password (`pass`) use:<br>`--build-arg USER=newusername` and/or `--build-arg='new password'`
 
-**Advanced:** You can change the filesystem by changing the files in `/rootfs`. The files here will end up in `/`.<br>
-Note that string `---OWNER---` everywhere in `/rootfs/etc/motd` will be replaced by the contents of the buildargument `OWNER`
+**Advanced:** You can change the filesystem by changing the files in `/rootfs`. These files here will end up in `/`.<br>
+Note that string `---OWNER---` everywhere in `/rootfs/etc/motd` will be replaced by the contents of the build argument `OWNER`
 
 ## Usage
 
-**WARNING**: Running the code as mentioned in the methods below places NO restriction on resources.<br>
+### WARNING: Running the code as mentioned in the methods below places NO restriction on resources !!!
 This means that the attacker can crash your host or in the worst case even damage the hardware.
-*[My question on StackOverflow](https://stackoverflow.com/questions/70395953/how-can-i-limit-a-docker-container-resources) can provide some information on how to do this.<br>
-At this moment it only contains my assumptions. Chances are that some of them are wrong. Once I get confirmation I will update the command below to a safe version<br>
-If you have experience in limiting resources on docker containers, you can add answers there and they will also be posted here if they get enough upvotes to be trusted.*
 
-- You can just run `docker run -d --rm -p 22:22 --name beerpot beerpot`.<br>*You can now alsosee the connections (and attempts) are visible with `docker logs beerpot`*
+[My question on StackOverflow](https://stackoverflow.com/questions/70395953/how-can-i-limit-a-docker-container-resources) provides some information on how to restrict resources.<br>
+At this moment it only contains my assumptions. Chances are that some of them are wrong.<br>Once I get confirmation I will update the commands below to the safe version.
 
-- When you are using a firewall, the following is also an interesting setup:<br>*It makes sure that connections from IP's you trust end up on the ssh-server of the host while the rest of the internet will end up at honeypot*
+If you have experience in limiting resources on Docker containers, then<br>please add answers in my StackOverflow question and they will also be posted here if they get enough upvotes to be trusted.
+
+### Running it
+- You can just run `docker run -d --rm -p 22:22 --name beerpot beerpot`.<br>*You can now also see the connections (and attempts) are visible with `docker logs beerpot`*
+
+- When you are using a firewall, the following is also an interesting setup:<br>*(It makes sure that connections from IP's you trust end up on the ssh-server of the host while the rest of the internet will end up at honeypot)*
 
     - Change the `-p` option to `-p someOtherPort:22`<br>*(Set `someOtherPort` to a number above 1024 or you might run into problems)*
 
     - Change the firewall rule for the portward to tcp/22 on your host in such a way that only connections from IP's you trust are forwarded
 
     - Add a rule that forwards the traffic from the rest of the internet to `someOtherPort`
+
+- Once you manage to restrict resources attackers will often manage to crash the container.<br>You might want to consider also using the option `--restart=always`
 
 ## Support
 
